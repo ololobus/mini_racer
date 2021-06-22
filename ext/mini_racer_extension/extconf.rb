@@ -29,6 +29,10 @@ if ENV['CXX']
   CONFIG['CXX'] = ENV['CXX']
 end
 
+# Fix build on alpine
+# See: https://github.com/rubyjs/mini_racer/issues/199
+$CPPFLAGS += " -fdeclspec" if CONFIG['CXX'] =~ /clang/
+
 CXX11_TEST = <<EOS
 #if __cplusplus <= 199711L
 #   error A compiler that supports at least C++11 is required in order to compile this project.
